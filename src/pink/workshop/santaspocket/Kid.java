@@ -1,4 +1,4 @@
-package pink.workshop.naughtylist;
+package pink.workshop.santaspocket;
 
 import java.util.List;
 import java.util.Objects;
