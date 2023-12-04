@@ -1,7 +1,6 @@
 package pink.workshop.santaspocket;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Let's model Santa's pocket!
@@ -22,32 +21,36 @@ import java.util.List;
  * review the code, and propose improvements to it!
  */
 public class SantasPocket {
-  List<List<Kid>> santasLists = new ArrayList<>();
+  // List can have the same object multiple times
+  // For unique objects we can use: Set
+  private Map<ListType, Set<Kid>> santasLists = new HashMap<>();
 
-  public SantasPocket() {
-    List<Kid> niceList = new ArrayList<>();
-    santasLists.add(niceList);
-
-    List<Kid> naughtyList = new ArrayList<>();
-    Kid badKid = new Kid("Grinch");
-    naughtyList.add(badKid);
-    santasLists.add(naughtyList);
+  // getter method, creating a replica so that santasList cannot be modified form outside
+  public Map<ListType, Set<Kid>> getSantasLists() {
+    return Collections.unmodifiableMap(santasLists);
   }
 
-  public void addKidToList(Kid kid, boolean isGoodKid) {
-    if (isGoodKid) {
-      santasLists.get(0).add(kid);
-    } else {
-      santasLists.get(1).add(kid);
-    }
+  public SantasPocket() { // Constructor
+    // Java 8: Streams <3
+    // Initializing all types of lists based on the values that the enum has
+    // The initializing is needed because otherwise we will get null Sets -> big fat NullPointerExvception
+    Arrays.stream(ListType.values())
+        .forEach(listType -> santasLists.put(listType, new HashSet<>()));
+    // Reusing code to add a kid
+    addKidToList(new Kid("Grinch"), ListType.NAUGHTY_KIDS);
   }
 
-  public void removeKidFromList(String name, boolean isGoodKid) {
-    Kid tempKid = new Kid(name);
-    if (isGoodKid) {
-      santasLists.get(0).remove(tempKid);
-    } else {
-      santasLists.get(1).remove(tempKid);
-    }
+  public void addKidToList(Kid kid, ListType listType) {
+    santasLists.get(listType).add(kid);
+  }
+
+  public void removeKidFromList(String name, ListType listType) {
+    // Objects Util class since Java 7
+    // Null safety -> check if the things that we are calling methods are not null
+    // We could also add validation in the beginning of the method to make sure that we don't get nulls from the arguments
+    santasLists
+        .get(listType)
+        .removeIf(kid -> Objects.nonNull(kid)
+                && Objects.equals(name, kid.getName()));
   }
 }

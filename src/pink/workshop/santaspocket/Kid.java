@@ -1,24 +1,23 @@
 package pink.workshop.santaspocket;
 
 import java.util.List;
-import java.util.Objects;
 
 public class Kid {
 
-  String name;
-  boolean isNice;
-  List<String> wishedGifts;
+  // name can be final, lets assume kids don't change names
+  // final is used for things we initialize then never change
+  // for example: data coming in from an HTTP request -> you dont want to mess up the incoming data
+  private final String name;
+  // We removed the "isNice" field, it was redundant data, the list the kid is on already tells us if the kid's nice
+  private List<String> wishedGifts;
 
-  public Kid(String name) {
+  public Kid(String name) { //constructor
     this.name = name;
   }
 
-  public String getName() {
+  // We removed the setter for name, because it cannot be modified after the contractor has been called
+  String getName() {
     return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
   }
 
   public List<String> getWishedGifts() {
@@ -29,19 +28,12 @@ public class Kid {
     this.wishedGifts = wishedGifts;
   }
 
-  public boolean isNice() {
-    return isNice;
-  }
-
-  public void setNice(boolean nice) {
-    this.isNice = nice;
-  }
-
-  @Override
-  public boolean equals(Object secondKid) {
-    if (this == secondKid) {
-      return true;
-    }
-    return (secondKid instanceof Kid otherKid) && Objects.equals(this.name, otherKid.name);
-  }
+  // Not needed anymore, was used by the "tempKid" when removing from the list
+//  @Override
+//  public boolean equals(Object secondKid) {
+//    if (this == secondKid) {
+//      return true;
+//    }
+//    return (secondKid instanceof Kid otherKid) && Objects.equals(this.name, otherKid.name);
+//  }
 }

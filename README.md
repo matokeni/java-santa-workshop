@@ -1,3 +1,9 @@
+UPDATE: added the solution we wrote together on Sunday with comments, also added a package named "solution" in the second task that we didn't have time to do.
+
+In the second task the original implementation has comments about what could be wrong in the code, the solution has comments about how this is better :)
+
+---
+
 # Pink Workshop
 
 Santa is hiring Java developers!

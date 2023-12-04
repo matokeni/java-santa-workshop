@@ -6,6 +6,7 @@ public class SecretSanta {
   private final int size;
   private SecretSanta buyingGiftTo;
 
+  // The constructors could "reuse" each other, initializing name and size is duplicated code here
   public SecretSanta(String name, int size) {
     this.name = name;
     this.size = size;
